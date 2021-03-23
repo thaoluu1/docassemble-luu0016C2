@@ -1,0 +1,46 @@
+---
+# Asks the initial question
+# We populate MJFsue_reason with 'MJFpromisee' or 'MJFpromisor'.
+# These strings are easier work with than the long-form answer
+# we display to the user.
+# Ref: https://docassemble.org/docs/fields.html#radio
+# Asking prelim questions like right side but adjusting wording
+question: Describe the work you were asked to perform
+fields:
+  - no label: TKLwork_requested
+    datatype: area
+---
+question: Payment
+fields:
+  - How much did you agree to be paid for this work?: TKLpayment_agreed
+    datatype: currency
+    min: 0
+under: |
+  If you have not yet received any pay, just leave the default value of $0.00
+---
+# Test for Offer and Acceptance
+question: Did you agree with the other person to do this work?
+fields:
+  - no label: TKLcertainty
+    datatype: radio
+    choices:
+      - Yes. I agreed to do exactly this work: TKLagree_exact
+      - Yes. I agreed to do some of this work but there was other work that was not agreed to that I have not done: TKLagree_inexact
+      - No. I did not agree to do this work or all of this work: TKLdisagree
+---
+# Test for Consideration (and Certainty)
+question: Payment for the Work
+subquestion: |
+  Did you and the other person agree how much you would be paid for the work?
+fields:
+  - no label: TKLconsideration
+    datatype: radio
+    choices:
+      - Yes, we agreed on the payment of ${ currency(TKLpayment_agreed) } for the work: True
+      - No, we never reached a firm agreement on how much I would be paid: False
+---
+question: Who did you contract with?
+subquestion: |
+  Was the other person an adult?
+yesno: TKLcapacity
+---

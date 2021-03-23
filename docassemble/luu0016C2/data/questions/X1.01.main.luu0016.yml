@@ -1,0 +1,57 @@
+# Students should
+# - test for the elements of contract according to contract law
+# - do so in easy to read language with a Fleish score of > 60
+---
+# This is a complex program.  We therefore split the code out 
+# into multiple files (see the B1.01 video for more info)
+include:
+  - X1.01.questions.luu0016.yml
+  - X1.01.leftquestions.yml
+  - X1.01.endpoints.luu0016.yml
+---
+mandatory: True
+question: Breach of Contract App
+subquestion: |
+  Welcome to the Breach of Contract application.
+  
+  This application will assist in determining whether there has been a breach of contract by guiding you through the necessary elements.
+  
+  ***Disclaimer:***  
+  **This advice is not to be taken as genuine legal advice and is not a substitute
+  for you seeking independent legal advice.**
+
+  If you continue you accept these terms.
+buttons:
+  - I agree and wish to continue: continue
+  - I do not agree and wish to exit: exit
+---
+mandatory: True
+code: |
+  MJFsue_reason
+  
+  if MJFsue_reason == 'MJFpromisor':
+    TKLwork_requested
+    TKLpayment_agreed
+    
+    if TKLcertainty == 'TKLagree_exact' and TKLconsideration == True and TKLcapacity == True:
+      MJFcontract_exists = True
+    else:
+      MJFcontract_exists = False
+      
+    endpoints['final_screen']
+      
+  elif MJFsue_reason == 'MJFpromisee':
+    MJFwork_requested
+    MJFpayment_agreed
+    
+    if MJFcertainty == 'MJFagree_exact' and MJFconsideration == True and MJFcapacity == True:
+      MJFcontract_exists = True
+    else:
+      MJFcontract_exists = False
+      
+    endpoints['final_screen']
+    
+  else:
+    error_message = 'Unknown value in MJFsue_reason: {}'.format(MJFsue_reason)
+    endpoints['error_screen']
+---
